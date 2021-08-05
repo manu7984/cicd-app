@@ -10,6 +10,7 @@ lane :test do
       arguments: "-major",
       yml: "./version.yml",
       pubspec: "./pubspec.yaml")
+      bump_code
   end
   
   lane :bump_minor do
@@ -17,6 +18,7 @@ lane :test do
       arguments: "-minor",
       yml: "./version.yml",
       pubspec: "./pubspec.yaml")
+      bump_code
   end
   
   lane :bump_patch do
@@ -24,6 +26,14 @@ lane :test do
       arguments: "-patch",
       yml: "./version.yml",
       pubspec: "./pubspec.yaml")
+      bump_code
+  end
+ 
+  lane :bump_code do
+    build_number = Time.new.strftime("%s")
+      Dir.chdir "../android" do 
+        sh("bundle", "exec","fastlane","internal", "build_number:#{build_number}") 
+      end 
   end
   
   lane :read_version do

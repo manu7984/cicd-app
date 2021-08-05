@@ -30,9 +30,10 @@ platform :android do
     upload_to_play_store
   end
 
-  lane :internal do
+  lane :internal do |options|
     # Adjust the `build_type` and `flavor` params as needed to build the right APK for your setup
-    build_number = Time.new.strftime("%s")
+    #build_number = Time.new.strftime("%s")
+    build_number = options[:build_number]
     Dir.chdir ".." do
       sh("bundle", "update", "fastlane")
       sh("flutter", "packages", "get")
@@ -44,6 +45,7 @@ platform :android do
     upload_to_play_store(
       track: 'internal',
       release_status: 'draft',
+      changes_not_sent_for_review:true,
       aab:'../build/app/outputs/bundle/release/app-release.aab'
     )
     slack(

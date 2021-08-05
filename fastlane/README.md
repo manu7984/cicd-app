@@ -35,6 +35,11 @@ fastlane bump_minor
 fastlane bump_patch
 ```
 
+### bump_code
+```
+fastlane bump_code
+```
+
 ### read_version
 ```
 fastlane read_version

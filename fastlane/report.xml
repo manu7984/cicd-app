@@ -4,5 +4,20 @@
     
     
     
+      
+      <testcase classname="fastlane.lanes" name="0: flutter_version_manager" time="0.5463361">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: Switch to bump_code lane" time="0.0116403">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: bundle exec fastlane internal build_number:1628160616" time="183.2689817">
+        
+      </testcase>
+    
   </testsuite>
 </testsuites>
