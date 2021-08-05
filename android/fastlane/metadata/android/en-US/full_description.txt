@@ -1,0 +1,1 @@
+StartUp Namer is testing app to verify the Play Store upload and release process

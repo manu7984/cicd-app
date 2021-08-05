@@ -1,0 +1,2 @@
+json_key_file("D:\\E_Drive\\Work\\CRMPlus\\OC\\DealersApp\\sn_ci\\api-7711690389866473731-130745-5d3b614282f9.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("com.omantel.startup_namer") # e.g. com.krausefx.app

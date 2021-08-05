@@ -1,0 +1,64 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+ 
+  desc "Deploy a new version to the Google Play"
+
+  lane :deploy do
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store
+  end
+
+  lane :internal do
+    # Adjust the `build_type` and `flavor` params as needed to build the right APK for your setup
+    build_number = Time.new.strftime("%s")
+    Dir.chdir ".." do
+      sh("bundle", "update", "fastlane")
+      sh("flutter", "packages", "get")
+      sh("flutter", "clean")
+      sh("flutter", "build", "appbundle", "--build-number=#{build_number}")
+    end
+    gradle(task: 'assemble', build_type: 'Release')
+    
+    upload_to_play_store(
+      track: 'internal',
+      release_status: 'draft',
+      aab:'../build/app/outputs/bundle/release/app-release.aab'
+    )
+    slack(
+      message: 'Successfully distributed a new beta build # ' + build_number, 
+      slack_url:'https://hooks.slack.com/services/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'
+      )
+    rescue => exception
+	    on_error(exception)
+      # ...
+  end
+end
+def on_error(exception)
+	slack(
+      message: "Lane failed with exception : #{exception}",
+      success: false,
+      slack_url: 'https://hooks.slack.com/services/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'
+	  )
+end
